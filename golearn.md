@@ -29,11 +29,11 @@
 由于 golang 是强类型语言, 所以会经常遇到常见类型之间的相互转换, 如 string 转换成 int 或者 float64、int 转换成 string 等, 下面我将列举一些常见的类型转换实例方法:
 
 * string 转换成 int:
-下面是示例代码, 点此可以运行:
+- [常见类型转换, 点此可以运行](http://play.golang.org/p/E6nZ6B8P6V)
 
-- [常见类型转换](http://play.golang.org/p/E6nZ6B8P6V)
-	
-	package main
+下面是示例代码:
+
+    package main
 
 	import (
 		"fmt"
@@ -107,4 +107,41 @@
 		// bool -> string.
 		fmt.Println(strconv.FormatBool(0 < 1)) // 输出 true.
 		fmt.Println(strconv.FormatBool(0 > 1)) // 输出 false.
+	
+		// interface 类型转换.
+		interfaceTypeConversion("xiaomi v5")
+		interfaceTypeConversion(19)
+		interfaceTypeConversion(3.1415926)
+		interfaceTypeConversion([]byte("lalalal"))
+		interfaceTypeConversion('b')
 	}
+	
+	func interfaceTypeConversion(in interface{}) {
+		switch v := in.(type) {
+		case string:
+			fmt.Println("in is string type.", v)
+		case int32, int64:
+			fmt.Println("in is string int.", v)
+		case float32, float64:
+			fmt.Println("in is string float64.", v)
+		case []byte:
+			fmt.Println("in is string []byte.", v)
+		case byte:
+			fmt.Println("in is string byte.", v)
+		default:
+			fmt.Println("unknown")
+		}
+	
+		return
+	}
+
+- 说明:
+* 直接转换, 必须显示声明, 但必须在相互兼容类型之间;
+* 可用于直接转换的类型对应表:
+	同类型不同尾数: 如 int32 <-> int64, float32 <-> float64
+	[]byte <-> string 
+	float32 || folat64 <-> int
+* 类型转换可使用强大的 strconv 和 fmt 系统包.
+* interface 类型转换的时候通过 type switches, 如将 interface 转换成 string, 需要采用如下的方式:
+	tmp := a.(string)
+	
