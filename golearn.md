@@ -32,7 +32,7 @@
 - [常见类型转换, 点此可以运行](http://play.golang.org/p/E6nZ6B8P6V)
 
 下面是示例代码:
-
+	
 	package main
 	
 	import (
