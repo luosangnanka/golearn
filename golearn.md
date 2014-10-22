@@ -33,8 +33,8 @@
 
 下面是示例代码:
 
-    package main
-
+	package main
+	
 	import (
 		"fmt"
 		"strconv"
@@ -144,4 +144,3 @@
 * 类型转换可使用强大的 strconv 和 fmt 系统包.
 * interface 类型转换的时候通过 type switches, 如将 interface 转换成 string, 需要采用如下的方式:
 	tmp := a.(string)
-	
