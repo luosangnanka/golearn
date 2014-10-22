@@ -28,11 +28,10 @@
 
 由于 golang 是强类型语言, 所以会经常遇到常见类型之间的相互转换, 如 string 转换成 int 或者 float64、int 转换成 string 等, 下面我将列举一些常见的类型转换实例方法:
 
-* string 转换成 int:
-- [常见类型转换, 点此可以运行](http://play.golang.org/p/E6nZ6B8P6V)
+* [常见类型转换, 点此可以运行](http://play.golang.org/p/E6nZ6B8P6V)
 
 下面是示例代码:
-	
+
 	package main
 	
 	import (
@@ -144,3 +143,66 @@
 * 类型转换可使用强大的 strconv 和 fmt 系统包.
 * interface 类型转换的时候通过 type switches, 如将 interface 转换成 string, 需要采用如下的方式:
 	tmp := a.(string)
+
+# 常见的字符串处理
+
+由于各种业务需要, 不论什么语言, 编码过程中最常见的部分就是字符串的相关处理了, 我们可以从 PHP 中封装的大量的字符串相关函数中便可以看的出来, 下面是列举的常见的字符串相关操作:
+
+* 拼接字符串:
+- 拼接字符串有多种方式, 几种方式如下:
+
+	var a string = "xiaomi "
+	var b string = "v5"
+
+1、简单的直接拼接:
+	
+	fmt.Println(a + b)
+
+2、使用 bytes 包进行拼接:
+	
+	tmp := bytes.Buffer{}
+	tmp.WriteString(a)
+	tmp.WriteString(b)
+	fmt.Println(tmp.String()) 
+
+3、使用 fmt 包进行拼接:
+	
+	fmt.Printf("%s%s", a, b)
+
+经过实际测试, 直接拼接的效率是最高的, 而使用的 bytes 包效率高于 fmt 包, 而低于直接拼接.
+
+* 字符串切割:
+- 会经常遇到字符串的切割问题, 因为字符串本身就是一个 slice, 所以直接的取字符串的某部分可以使用如下的方式:
+	
+	var a string = "xiaomiv5"
+	fmt.Println(a[:4]) 	// 输出 xiao.
+	fmt.Println(a[4:6]) // 输出 mi.
+	fmt.Println(a[6:]) 	// 输出 v5.
+
+- 但会遇到通过特殊字符的切割, 可以通过强大的 strings 包实现:
+	
+	var b string = "xiaomi_mi_v5_1"
+	bSlice := strings.Split(b, "_")
+	fmt.Println(bSlice[1])
+
+也可以通过索引的方式, 进行切割:
+	
+	index1 := stirngs.Index(b, "_")
+	fmt.Println(b[:index1]) // 输出 xiaomi
+
+	index2 := strings.LastIndex(b, "_")
+	fmt.Println(b[index2:]) // 输出 1
+
+当然, 如果想要采用如上这样索引的方式取出中间的部分则需要连续索引切割的方式了.
+
+# slice
+
+slice, 即可动态分配内存的数组形式, 也是我们最长进行处理的数据形式, 下面是 slice 相关的处理方法列举:
+
+* append 操作.
+
+	var tmpSlice = make([]string, 0)
+	tmpSlice = append(tmpSlice, "1")
+	tmpSlice = append(tmpSlice, "10")
+	tmpSlice = append(tmpSlice, "20", "30")
+	fmt.Println(tmpSlice) // 输出 [1 10 20 30]
